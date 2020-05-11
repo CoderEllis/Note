@@ -1,0 +1,50 @@
+插件位置
+/Users/username/Library/Developer/Xcode
+沙盒位置
+/Users/username/Library/Developer/CoreSimulator/Devices/6DEE748E-98AB-4DAB-B08C-24858979286E/data/Containers/Data/Application
+
+忽略 DS_Store
+Mac中每个目录都会有个文件叫.DS_Store,用于存储当前文件夹的一些Meta信息。每次提交代码时，我都要在代码仓库的.gitignore中声明，忽略这类文件。有方法可以全局性的忽略某种类型的文件吗？
+
+按照以下两步就可实现
+
+1.创建~/.gitignore_global文件，把需要全局忽略的文件类型塞到这个文件里。
+
+# .gitignore_global
+####################################
+######## OS generated files ########
+####################################
+.DS_Store
+.DS_Store?
+*.swp
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+####################################
+############# Packages #############
+####################################
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+2.在~/.gitconfig中引入.gitignore_global。
+
+这是我的.gitconfig文件:
+
+[user]
+name = yonghuming
+email = xxxxx@gmail.com
+[push]
+default = matching
+[core]
+excludesfile = /Users/yonghuming/.gitignore_global
+
+3.搞定了！在所有的文件夹下.DS_Store .swp .zip等文件类型会被Git自动忽略。

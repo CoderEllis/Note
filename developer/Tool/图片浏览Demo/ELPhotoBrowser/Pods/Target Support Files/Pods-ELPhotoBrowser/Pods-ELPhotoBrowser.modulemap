@@ -1,0 +1,6 @@
+framework module Pods_ELPhotoBrowser {
+  umbrella header "Pods-ELPhotoBrowser-umbrella.h"
+
+  export *
+  module * { export * }
+}

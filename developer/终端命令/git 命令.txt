@@ -1,0 +1,181 @@
+⼀一.命令⾏的演⽰示 
+1.初始化⼀一个代码仓库
+git init 
+
+2.如果使⽤用GIT,必须给GIT配置⽤用户名和邮箱 
+
+给当前的git仓库配置⽤用户名和邮箱
+git config user.name “ellis”
+git config user.email “156228219@qq.com” 
+
+给git配置全局的⽤用户和邮箱
+git config —global user.name “ellis”
+git config —global user.email “156228219@qq.com” 
+
+3.初始化项目
+touch main.m : 创建了main.m
+git add main.m : 将main.m添加到暂缓区
+
+git add . : 将在⼯作区所有不在暂缓区的所有内容添加到暂缓区
+git commit -m “初始化项目” : 将在暂缓区的所有内容提交到本地版本库, 清空暂缓区
+注意: 添加的文件或者是修改的文件都要通过add命令将该文件添加到暂缓区
+
+4.查看⽂件状态 
+git status
+红⾊色 : 该文件被添加或者被修改,但是没有添加到git的暂缓区 
+绿⾊色 : 该⽂件在暂缓区,但是没有提交到本地版本库
+
+5.给命令⾏行起别名
+git config alias.st “status”
+git config alias.ci “commit -m”
+git config —global alias.st “status"
+
+6.删除⽂文件
+git rm person.m : 将person.m删除
+
+7.*********************************查看版本信息*******************************************
+git log : 版本号是由sha1算法⽣成的40位哈希值 
+git reflog : 可以查看所有版本回退的操作 分支引用记录
+git log --pretty=oneline  去杂乱信息
+***********************************查看版本信息*********************************************
+
+
+8.*******************************版本回退*************************************************
+git reset --hard HEAD : 回到当前版本 放弃所有没有提交的修改
+git reset --hard HEAD^ : 回到上一个版本 
+git reset --hard HEAD^^ : 回到上上个版本
+git reset --hard HEAD~100 :回到前100个版本 
+git reset --hard  (d6542d-版本号 前5位）
+******************************************************************************************
+
+9.给log起别名 配置带颜色的log别名
+git config --global alias.lg "log --color --graph -- pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+
+二.共享版本库 
+git服务器的搭建⾮常繁琐(linux) 
+可以把代码托管到(Github/OSChina) 
+⼀个文件夹
+一个U盘
+
+1.一个⽂文件夹作为共享版本库 
+git init --bare
+
+2.将共享版本库的所有内容下载到本地 
+git clone 共享版本库地址
+
+3.删除忽略⽂文件  注意在个人仓库目录 git 下创建忽略文件
+touch .gitignore —> Github ->搜索”.gitignore” -> 选择*最多的->找到 Object-C,复制下来
+
+4.版本回退
+git reset —-hard HEAD^ :回到上一个版本(张三) 
+git reset —-hard HEAD^ :回到上一个版本(经理)
+git push -f ：强制上传到共享版本库
+
+三.版本备份(了解) 
+1.1.0版本开发完毕,将1.0版本上传到AppStore,对1.0版本进⾏行备份(打上标签)
+git tag -a weibo1.0 -m “这是1.0版本”
+git tag 
+
+2.需要将标签push到共享版本库
+git push origin weibo1.0
+
+3.开始2.0版本的开发 
+
+4.发现1.0版本有bug,在经理的文件夹下面创建一个⽂件夹,⽤于修复bug,将共 享版本库所有内容clone
+git clone 
+
+5.将当前的代码转为1.0标签,创建分⽀,并切换到该分⽀
+git checkout weibo1.0 : 转为1.0标签
+git checkout -b weibo1.1fixbug : 创建分⽀,并切换到该分⽀
+                   
+6.在分支中修复bug,上传到AppStore,将修复好的版本,打上tag,并上传到共享 版本库
+git tag :查看当前分支
+git tag -a weibo1.1 -m “这是修复了1.0bug的1.1版本” 在本地代码仓库给项目打上一个标签
+git push origin weibo1.1   将标签推送到远程代码库中
+
+7.跟当前正在开发的2.0版本进行合并 
+source Control - > pull ->weibo1.1fixbug 
+
+8.删除分⽀
+        切换分支+分支名称  git checkout master 
+git branch :查看当前在哪个分⽀
+git branch -r :查看本地版本库的分⽀
+git branch -d weibo1.1fixbug : 删除本地分⽀
+git branch -r -d origin/weibo1.1fixbug :删除本地版本库分⽀
+git push origin —-delete weibo1.1fixbug
+
+四.新人代码仓库
+创建⼀个⽂件夹作为共享版本库
+项目经理项空的代码仓库push代码 source control -> configuration -> 添 加共享版本库地址
+
+五.Github上托管代码 
+1.使用HTTPS认证 
+2.使用SSHKeys认证
+公钥 : 存在github上⽤用来解密
+私钥 : 存在本地的⼀一个.ssh文件夹下用来加密
+查看有没有ssh: ls -al ~/.ssh
+创建SSH Keys:  
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+
+
+
+
+
+
+********************************  Git 共享仓库&克隆*******************************
+1.⼀个文件夹作为共享版本库 git init --bare
+
+2.将共享版本库的所有内容下载到本地 git clone + 共享版本库地址
+
+3.删除忽略⽂件  注意在个人仓库目录 git 下创建忽略文件
+
+touch .gitignore —> Github ->搜索”.gitignore” -> 选择*最多的->找到 Object-C,复制下来
+
+必须初始化项目 不然pull闪退
+*******************************************************************************
+git add .                         将在工作区所有不在暂缓区的所有内容添加到暂缓区
+git commit -m “初始化项目”      : 将在暂缓区的所有内容提交到本地版本库, 清空暂缓区
+git push -u origin master   （注：此操作目的是把本地仓库push到github上面，此步骤需要你输入帐号和密码）
+
+git status   查看⽂件状态
+
+********************完成仓库创建---再执行新建项目************************************
+
+多人合作情况下，先Pull 再 Push
+
+
+
+******************************* Pod ***************************************
+contron + c 取消cmd 请求
+Cocoapods管理第三方框架:导入一个框架,会把这个框架依赖的所有框架都导入
+cd 进入项目文件夹 ls -l 查看文件
+pod init :新建 Podfile 文件包含版本信息
+             --------touch podfile  :描述需要导入哪些框架-----（这个命令不包含信息）
+open podfile
+pod search (AF框架) :搜索需要导入的文件
+pod install --no-repo-update  :安装第三方框架
+pod install : 根据podfile.lock去加载,第一次会根据 podfile 文件加载 每一次更新框架索引
+
+podfile.lock  第一次 pod install 就会自动生成这个文件,描述当前导入框架版本
+pod update : 去查看之前导入框架有没有新的版本,如果有新的版本就会去加载,并且更新 pod.lock
+
+pod repo :管理第三方仓库的索引,去寻找框架有没有最新版本,有就记录
+
+gem install cocoapods :更新cocoaPods版本:
+pod repo update :更新本地库
+pod install -help :查询命令
+
+
+
+但是再次输入pod search fmdb依然是提示找不到,是因为之前pod search的时候生成了search_index.json,把它删除掉即可输入命令：rm ~/Library/Caches/CocoaPods/search_index.json回车
+
+
+
+
+
+
+
+
+
+
+

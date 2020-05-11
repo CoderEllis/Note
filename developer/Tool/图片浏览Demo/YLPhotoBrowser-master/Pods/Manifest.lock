@@ -1,0 +1,15 @@
+PODS:
+  - Kingfisher (3.10.4)
+  - YLPhotoBrowser-Swift (0.1.2):
+    - Kingfisher
+
+DEPENDENCIES:
+  - YLPhotoBrowser-Swift
+
+SPEC CHECKSUMS:
+  Kingfisher: dc3a4983e86d2dfa89513664983a82340c11a289
+  YLPhotoBrowser-Swift: c28f3701b4cefc1af7213217f90b13e7b747c8ef
+
+PODFILE CHECKSUM: e74bbf6e51d94cf1520771a2bd7415694037fb37
+
+COCOAPODS: 1.2.1
